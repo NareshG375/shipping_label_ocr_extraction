@@ -1,8 +1,22 @@
 """
 Core OCR engine using multiple OCR backends
 """
-import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+
+#for window
+# import pytesseract
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+
+import pytesseract, shutil
+
+# On Linux server:
+binary = shutil.which("tesseract")
+if binary:
+    pytesseract.pytesseract.tesseract_cmd = binary
+else:
+    # Optionally fallback, or raise error
+    raise RuntimeError("Tesseract binary not found. Make sure tesseract-ocr is installed.")
 
 from PIL import Image
 import numpy as np
