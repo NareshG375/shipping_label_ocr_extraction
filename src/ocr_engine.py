@@ -8,6 +8,9 @@ Core OCR engine using multiple OCR backends
 # pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
+
+# for streamlit 
+
 import pytesseract, shutil
 
 # On Linux server:

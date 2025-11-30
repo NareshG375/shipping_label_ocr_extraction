@@ -11,7 +11,8 @@ class TextExtractor:
     def __init__(self):
         """Initialize text extractor"""
         # Pattern for _1_ format (flexible)
-        self.target_pattern = r'\w+_1_\w*'
+        #self.target_pattern = r'\w+_1_\w*'
+        self.target_pattern = r'(\d+)\s*(\d+_1_\w+)'
 
         
     def clean_ocr_errors(self, text: str) -> str:
@@ -38,35 +39,26 @@ class TextExtractor:
             cleaned = cleaned.replace(old, new)
         
         return cleaned
-        
+    
+
     def extract_target_text(self, text: str) -> Optional[str]:
-        """
-        Extract text containing _1_ pattern
-        
-        Args:
-            text: Input text from OCR
-        
-        Returns:
-            Extracted text matching pattern or None
-        """
+
         if not text:
             return None
-        
-        # Clean OCR errors first
-        cleaned_text = self.clean_ocr_errors(text)
-        
-        # Search for pattern in cleaned text
-        matches = re.findall(self.target_pattern, cleaned_text, re.MULTILINE)
-        
-        if matches:
-            return matches[0]
-        
-        # If not found, try original text
-        matches = re.findall(self.target_pattern, text, re.MULTILINE)
-        if matches:
-            return matches[0]
-        
+
+        cleaned = self.clean_ocr_errors(text)
+
+        match = re.search(self.target_pattern, cleaned)
+        if match:
+            return match.group(1) + match.group(2)
+
+        # Try original text
+        match = re.search(self.target_pattern, text)
+        if match:
+            return match.group(1) + match.group(2)
+
         return None
+        
     
     def extract_all_matches(self, text: str) -> List[str]:
         """
