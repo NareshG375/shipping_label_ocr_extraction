@@ -118,7 +118,7 @@ Example output:
 1. Preprocess the image  
 2. Apply OCR engine  
 3. Detect patterns such as `_1_` 
-4. Return structured JSON with extracted text, confidence, and timestamp  
+4. Return structured JSON with extracted text, confidence, accuracy and timestamp  
 
 ### Accuracy Calculation Methodology
 - Compare OCR output against manually labeled ground truth  
